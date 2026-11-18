@@ -6,7 +6,7 @@
  * document has a URL that will not move when the marketing copy changes.
  */
 
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 
 export const CONTACT = 'info@gossfinch.com';
 
@@ -43,7 +43,32 @@ const LINKS = [
   { href: '/privacy#delete', label: 'Delete your account' },
 ];
 
+/**
+ * Re-apply the URL fragment once the page has rendered.
+ *
+ * The browser scrolls to a fragment when the document loads, which here is
+ * before React has put anything in #root. By the time #delete exists the
+ * browser has long since given up, so a deep link such as /privacy#delete, or
+ * the /delete redirect, would land silently at the top of a very long page.
+ */
+function useScrollToHash() {
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    // Two frames: one for this paint, one for the layout that follows it.
+    // Scrolling in the same tick measures a page that is not laid out yet.
+    const frame = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView();
+      });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, []);
+}
+
 export function Layout({ current, children }: { current: string; children: ReactNode }) {
+  useScrollToHash();
+
   return (
     <>
       <div className="page">
