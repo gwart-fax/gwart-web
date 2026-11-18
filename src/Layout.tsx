@@ -36,11 +36,13 @@ export function Section({
   );
 }
 
+// Pages only. Account deletion is a section of Privacy, reachable from the
+// footer and from /delete, which redirects to its anchor. It was a tab here
+// briefly and a four-chip row reads as a site with more to it than this one has.
 const LINKS = [
   { href: '/', label: 'Home' },
   { href: '/privacy', label: 'Privacy' },
   { href: '/terms', label: 'Terms' },
-  { href: '/privacy#delete', label: 'Delete your account' },
 ];
 
 /**
