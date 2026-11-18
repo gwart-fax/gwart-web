@@ -62,8 +62,7 @@ export default function App() {
             <hr className="rule" />
             <p>
               Gwart is a little thermal printer that sits on your counter and prints notes from
-              your friends &mdash; on paper, in the middle of your kitchen, the moment they send
-              them.
+              your friends, on paper, in the middle of your kitchen, the moment they send them.
             </p>
             <p className="meta">
               A handful of prototypes are out with friends while we build the rest. This page is
@@ -87,12 +86,12 @@ export default function App() {
             <h3 className="title">The short version</h3>
             <ul>
               <li>
-                Everything you send &mdash; text and photos &mdash; is stored{' '}
+                Everything you send, text and photos alike, is stored{' '}
                 <strong>unencrypted</strong> on the server.
               </li>
               <li>
-                We <strong>can</strong> technically read it, and don&rsquo;t &mdash; except when
-                you ask us for help with a problem, or where the law requires it.
+                We <strong>can</strong> technically read it, and don&rsquo;t, except when you ask us
+                for help with a problem or the law requires it.
               </li>
               <li>
                 It is <strong>not</strong> end-to-end encrypted. Don&rsquo;t use Gwart for
@@ -171,8 +170,7 @@ export default function App() {
               <strong>The promise:</strong> we don&rsquo;t read the content of your faxes, except
               when you&rsquo;ve asked for help with a specific problem, or where the law requires
               it. A small number of people have the access that would make it possible, and
-              nothing in the system enforces the promise &mdash; it&rsquo;s a commitment, not a
-              control.
+              nothing in the system enforces the promise. It&rsquo;s a commitment, not a control.
             </p>
 
             <h3 className="title">How long things are kept</h3>
@@ -194,7 +192,7 @@ export default function App() {
 
             <h3 className="title">Who else can see your data</h3>
             <p>
-              <strong>Amazon Web Services</strong> hosts everything &mdash; the server, the
+              <strong>Amazon Web Services</strong> hosts everything: the server, the
               database, the storage bucket, and the broker the printers connect to. They process
               it on our behalf rather than using it for their own purposes.
             </p>
@@ -212,7 +210,7 @@ export default function App() {
             <p>
               A fax is printed on paper, so anyone who walks past the printer can read it. Quiet
               hours delay printing; they don&rsquo;t hide anything. And a printer has one owner
-              account &mdash; if a household shares a device, the account holder is the person
+              account. If a household shares a device, the account holder is the person
               whose account holds that record.
             </p>
 
@@ -244,8 +242,8 @@ export default function App() {
             <h3 className="title">Children</h3>
             <p>
               You must be <strong>13 or older</strong> to have a Gwart account. Gwart isn&rsquo;t
-              directed at children, and accounts for under-13s aren&rsquo;t permitted &mdash; if
-              we learn of one, we will delete it and its content. If you&rsquo;re under 18, set the
+              directed at children, and accounts for under-13s aren&rsquo;t permitted. If we learn
+              of one, we will delete it and its content. If you&rsquo;re under 18, set the
               account up with a parent&rsquo;s or guardian&rsquo;s knowledge.
             </p>
 
@@ -281,9 +279,14 @@ export default function App() {
             <h3 className="title">What gets removed</h3>
             <p>
               The account itself, your settings, your contacts, every fax you received with its
-              text and images, and any fax you sent that never actually reached anyone. It is
-              immediate once it runs and cannot be undone &mdash; there is no grace period, and no
-              backup a single account can be restored from.
+              text and images, and any fax you sent that never actually reached anyone. It takes
+              effect immediately and cannot be undone. There is no grace period and no way to
+              restore a single account.
+            </p>
+            <p className="meta">
+              One honest caveat: the database is backed up automatically, and those backups exist
+              for a few days before they roll off. Your data is gone from the live service at
+              once, and disappears from the backups shortly after.
             </p>
 
             <h3 className="title">Three things worth knowing first</h3>
@@ -301,7 +304,7 @@ export default function App() {
                 the account.
               </li>
               <li>
-                <strong>Your printer is not deleted &mdash; it is released.</strong> The hardware
+                <strong>Your printer is not deleted, it is released.</strong> The hardware
                 keeps working and can be set up again, by you or by whoever has it. Its nickname,
                 timezone and quiet hours are cleared.
               </li>
@@ -316,9 +319,9 @@ export default function App() {
 
           <Section id="contact" label="Contact">
             <p>
-              Gwart is built by a small independent team. There&rsquo;s no company behind it yet,
-              so responsibility for everything described on this page sits with{' '}
-              <strong>Sebastian Finch</strong>.
+              Gwart is built by a small independent team. Responsibility for everything described
+              on this page sits with <strong>Sebastian Finch</strong>, who you can reach at the
+              address below.
             </p>
             <p>
               Privacy questions, requests for your data, and deletion requests all go to{' '}
