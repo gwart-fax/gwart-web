@@ -3,11 +3,21 @@
 The holding page for [Gwart](https://github.com/gwart-fax), a little thermal
 printer that prints faxes from your friends.
 
-One page: "Coming Soon", plus the legal information the people holding a
-prototype need — privacy, and how to get their account deleted.
+Three pages: "Coming Soon", plus the legal information the people holding a
+prototype need. Privacy, terms, and how to get an account deleted.
 
-React + Vite + TypeScript. No router, no UI library, no state. The whole site is
-`src/App.tsx` and `src/index.css`.
+React + Vite + TypeScript. No router, no UI library, no state.
+
+```
+index.html          privacy/index.html      terms/index.html
+  └─ src/entries/*.tsx  →  src/pages/*.tsx  →  src/Layout.tsx
+```
+
+A multi-page build rather than a router: each page is a real file at its own key
+in the bucket, so `/privacy` is a document whose URL will not move when the
+marketing copy around it is rewritten. That matters because the URL ends up in
+app store listings and in other people's records. CloudFront maps the
+directory-style path to the key, via `deploy/cloudfront-rewrite.js`.
 
 ```bash
 npm install
@@ -29,6 +39,11 @@ the app follows the phone.
 
 Nothing has a border radius. The look depends on corners staying square, on hard
 2px outlines, and on offset shadows rather than blurred ones.
+
+**The fonts are self-hosted**, in `public/fonts`, rather than loaded from Google.
+A font CDN would hand Google the IP address of everyone reading a page whose
+whole job is explaining what we do with their data. `src/fonts.css` is generated;
+the fetch that produces it is in `deploy/README.md`.
 
 ## Deploying
 
