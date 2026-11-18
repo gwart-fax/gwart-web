@@ -61,12 +61,13 @@ export default function App() {
             <h1 className="hero">Coming Soon</h1>
             <hr className="rule" />
             <p>
-              Gwart is a little thermal printer that sits in your kitchen and prints faxes from
-              your friends. On paper. For no particularly good reason.
+              Gwart is a little thermal printer that sits on your counter and prints notes from
+              your friends &mdash; on paper, in the middle of your kitchen, the moment they send
+              them.
             </p>
             <p className="meta">
-              It is not for sale. A handful of prototypes are going out to friends, and this page
-              exists so the people holding one can read how their data is handled.
+              A handful of prototypes are out with friends while we build the rest. This page is
+              here so the people holding one can read how their data is handled.
             </p>
           </section>
 
@@ -90,8 +91,8 @@ export default function App() {
                 <strong>unencrypted</strong> on the server.
               </li>
               <li>
-                Sebastian <strong>can</strong> technically read it, and promises not to except
-                when you ask for help with a problem, or where the law requires it.
+                We <strong>can</strong> technically read it, and don&rsquo;t &mdash; except when
+                you ask us for help with a problem, or where the law requires it.
               </li>
               <li>
                 It is <strong>not</strong> end-to-end encrypted. Don&rsquo;t use Gwart for
@@ -167,9 +168,10 @@ export default function App() {
               server, and anyone with administrative access to it could read your faxes.
             </p>
             <p>
-              <strong>The promise:</strong> Sebastian will not read the content of your faxes
-              except when you have asked for help with a specific problem, or where the law
-              requires it. Nothing in the system enforces this &mdash; it is a commitment, not a
+              <strong>The promise:</strong> we don&rsquo;t read the content of your faxes, except
+              when you&rsquo;ve asked for help with a specific problem, or where the law requires
+              it. A small number of people have the access that would make it possible, and
+              nothing in the system enforces the promise &mdash; it&rsquo;s a commitment, not a
               control.
             </p>
 
@@ -236,7 +238,7 @@ export default function App() {
               <li>Printer pairing codes are single-use and expire in ten minutes.</li>
             </ul>
             <p className="meta">
-              No system is perfectly secure, and this one is a prototype run by one person.
+              No system is perfectly secure, and this one is early software run by a small team.
             </p>
 
             <h3 className="title">Children</h3>
@@ -314,17 +316,18 @@ export default function App() {
 
           <Section id="contact" label="Contact">
             <p>
-              Gwart is a hobby project, not a company. The app, the server and the printers are
-              built and run by one person: <strong>Sebastian Finch</strong>, who is responsible for
-              everything described on this page.
+              Gwart is built by a small independent team. There&rsquo;s no company behind it yet,
+              so responsibility for everything described on this page sits with{' '}
+              <strong>Sebastian Finch</strong>.
             </p>
             <p>
               Privacy questions, requests for your data, and deletion requests all go to{' '}
               <Mail />.
             </p>
             <p className="meta">
-              This is prototype hardware and prototype software given to a small number of friends.
-              It is not a certified consumer product and it carries no warranty.
+              Gwart is still early: the hardware and the software are both prototypes, in the
+              hands of a small number of friends. It isn&rsquo;t a certified consumer product, and
+              it comes with no warranty.
             </p>
           </Section>
         </main>
