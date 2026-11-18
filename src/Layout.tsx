@@ -40,6 +40,7 @@ const LINKS = [
   { href: '/', label: 'Home' },
   { href: '/privacy', label: 'Privacy' },
   { href: '/terms', label: 'Terms' },
+  { href: '/delete', label: 'Delete your account' },
 ];
 
 export function Layout({ current, children }: { current: string; children: ReactNode }) {
@@ -78,7 +79,8 @@ export function Layout({ current, children }: { current: string; children: React
             Gwart &middot; a thermal fax machine for friends &middot; <Mail />
           </p>
           <p className="meta" style={{ color: 'inherit' }}>
-            <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a>
+            <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a> &middot;{' '}
+            <a href="/delete">Delete your account</a>
           </p>
         </div>
       </footer>

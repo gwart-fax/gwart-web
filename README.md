@@ -3,15 +3,19 @@
 The holding page for [Gwart](https://github.com/gwart-fax), a little thermal
 printer that prints faxes from your friends.
 
-Three pages: "Coming Soon", plus the legal information the people holding a
-prototype need. Privacy, terms, and how to get an account deleted.
+Four pages: "Coming Soon", privacy, terms, and how to delete an account.
 
 React + Vite + TypeScript. No router, no UI library, no state.
 
 ```
-index.html          privacy/index.html      terms/index.html
+index.html   privacy/index.html   terms/index.html   delete/index.html
   └─ src/entries/*.tsx  →  src/pages/*.tsx  →  src/Layout.tsx
 ```
+
+Account deletion has its own page rather than an anchor inside privacy. Both app
+stores ask for a deletion URL that works without the app, and nobody should have
+to read a privacy policy to find out how to leave. The words live only on that
+page; privacy links to it.
 
 A multi-page build rather than a router: each page is a real file at its own key
 in the bucket, so `/privacy` is a document whose URL will not move when the

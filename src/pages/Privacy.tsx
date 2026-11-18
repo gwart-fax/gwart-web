@@ -237,50 +237,15 @@ export function Privacy() {
 
       <Section id="delete" label="Deleting your account">
         <p>
-          Email <Mail /> from any address and ask for your account to be deleted. Say which
-          username it is. Requests are answered <strong>within 30 days</strong>, and in practice
-          much sooner.
+          Email <Mail /> and ask. Requests are answered <strong>within 30 days</strong>, and in
+          practice much sooner. The same address works if you only want a copy of your data, or a
+          correction.
         </p>
-        <p className="meta">
-          The app doesn&rsquo;t have a delete button yet, so for now this is the way to do it.
-          Deletion itself is automated, so a request is carried out in full rather than
-          approximated by hand.
-        </p>
-
-        <hr className="rule" />
-
-        <h3 className="title">What gets removed</h3>
         <p>
-          The account itself, your settings, your contacts, every fax you received with its text
-          and images, and any fax you sent that never actually reached anyone. It takes effect
-          immediately and cannot be undone. There is no grace period and no way to restore a single
-          account.
+          <a href="/delete">What deleting your account removes</a> has the detail, including the
+          two things that surprise people: faxes you already sent stay with the people you sent
+          them to, and your printer is released rather than deleted.
         </p>
-        <p className="meta">
-          One honest caveat: the database is backed up automatically, and those backups exist for a
-          few days before they roll off. Your data is gone from the live service at once, and
-          disappears from the backups shortly after.
-        </p>
-
-        <h3 className="title">Three things worth knowing first</h3>
-        <ul>
-          <li>
-            <strong>Faxes you already sent stay with the people you sent them to.</strong> Deleting
-            your account doesn&rsquo;t retract them, in the same way closing an email account
-            doesn&rsquo;t unsend your email. What is removed is you: the fax stays in the
-            recipient&rsquo;s history attributed to a deleted account rather than to your name. It
-            also already printed on their paper, which was never ours to take back.
-          </li>
-          <li>
-            <strong>A fax that never reached anyone is deleted.</strong> If it was still queued, or
-            never made it to the printer, nobody has a record of it and it goes with the account.
-          </li>
-          <li>
-            <strong>Your printer is not deleted, it is released.</strong> The hardware keeps
-            working and can be set up again, by you or by whoever has it. Its nickname, timezone
-            and quiet hours are cleared.
-          </li>
-        </ul>
       </Section>
 
       <Section id="security" label="Security">

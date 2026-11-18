@@ -19,6 +19,10 @@ export default defineConfig({
         home: resolve(import.meta.dirname, 'index.html'),
         privacy: resolve(import.meta.dirname, 'privacy/index.html'),
         terms: resolve(import.meta.dirname, 'terms/index.html'),
+        // Its own page rather than an anchor in Privacy: both app stores ask
+        // for a deletion URL that works without the app, and nobody should
+        // have to read a privacy policy to find out how to leave.
+        delete: resolve(import.meta.dirname, 'delete/index.html'),
       },
     },
   },

@@ -32,8 +32,7 @@ export function Terms() {
 
       <Section id="what" label="What Gwart is">
         <p>
-          Gwart is a thermal printer and an app that sends messages to it. Right now both are
-          prototypes in the hands of a small number of people, and it should be treated as such:
+          Gwart is a thermal printer and an app that sends messages to it. It&rsquo;s early, so
           things will break, change, and occasionally print sideways.
         </p>
         <p>

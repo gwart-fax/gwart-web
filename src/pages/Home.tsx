@@ -10,10 +10,6 @@ export function Home() {
           Gwart is a little thermal printer that sits on your counter and prints notes from your
           friends, on paper, in the middle of your kitchen, the moment they send them.
         </p>
-        <p className="meta">
-          A handful of prototypes are out with friends while we build the rest. These pages are
-          here so the people holding one can read how their data is handled.
-        </p>
       </section>
 
       <section className="panel">
