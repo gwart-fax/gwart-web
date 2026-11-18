@@ -1,7 +1,20 @@
 # Deploy — S3 + CloudFront + Route 53
 
-One-time infrastructure setup. After this, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
-builds every push and deploys `main` on its own.
+**This is built and live at https://gwartfax.com.** What follows is how it was
+put together, kept because the next environment will need it and because two of
+the steps fail in ways that are hard to read.
+
+| | |
+| --- | --- |
+| AWS account | `689971417469`, profile `gwart` |
+| Bucket | `gwart-web-site` (us-east-1, private) |
+| Distribution | `E35NT7ES68P0IL` → `d2o5vs8sv4l1tb.cloudfront.net` |
+| Certificate | `8123e591-…` in **us-east-1** |
+| Hosted zone | `Z045954237YMPGFALN4J4` (`gwartfax.com`) |
+| Deploy role | `gwart-web-deploy` |
+
+[`.github/workflows/ci.yml`](../.github/workflows/ci.yml) builds every push and
+deploys `main` on its own.
 
 The site is static and has no router — one page, anchors for the sections — so
 none of the single-page-app rewrite machinery is needed. Nothing here talks to
@@ -199,26 +212,53 @@ aws iam create-open-id-connect-provider \
   --thumbprint-list 6938fd4d98bab03faadb97b34396831e3780aea1
 ```
 
-Then a role whose trust policy names **this repository and this branch**. The
-`sub` condition is the part that matters: without it, any repository on GitHub
-can assume the role.
+Then a role whose trust policy pins the `sub` claim. That condition is the part
+that matters: without it, any repository on GitHub can assume the role.
+
+**Two things make the `sub` value not what you would guess**, and both of them
+fail with the same unhelpful `Not authorized to perform
+sts:AssumeRoleWithWebIdentity`:
+
+1. **The deploy job declares `environment: production`.** A job with an
+   environment gets `...:environment:production` as its subject, *not*
+   `...:ref:refs/heads/main`. Naming the branch in the trust policy matches
+   nothing.
+2. **This org has immutable subject claims**, so the org and repository carry
+   their numeric database ids: `gwart-fax@316361583/gwart-web@1462193305`. No
+   name-based pattern matches, `repo:gwart-fax/gwart-web:*` included. This is a
+   good thing — it pins the trust to ids that survive a rename and are not
+   re-granted if someone recreates a repository under the same name — but it is
+   invisible until you look.
+
+So the working policy is:
 
 ```json
 {
   "Version": "2012-10-17",
   "Statement": [{
     "Effect": "Allow",
-    "Principal": { "Federated": "arn:aws:iam::<account>:oidc-provider/token.actions.githubusercontent.com" },
+    "Principal": { "Federated": "arn:aws:iam::689971417469:oidc-provider/token.actions.githubusercontent.com" },
     "Action": "sts:AssumeRoleWithWebIdentity",
     "Condition": {
       "StringEquals": {
         "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
-        "token.actions.githubusercontent.com:sub": "repo:gwart-fax/gwart-web:ref:refs/heads/main"
+        "token.actions.githubusercontent.com:sub": "repo:gwart-fax@316361583/gwart-web@1462193305:environment:production"
       }
     }
   }]
 }
 ```
+
+**Don't guess at this value — read it.** STS never tells you what it received,
+but CloudTrail does, and the failed attempt is logged with the subject in it:
+
+```bash
+aws cloudtrail lookup-events --region us-east-1 \
+  --lookup-attributes AttributeKey=EventName,AttributeValue=AssumeRoleWithWebIdentity \
+  --max-results 1 --query 'Events[].CloudTrailEvent' --output text
+```
+
+`userIdentity.userName` in that event is the exact string to paste.
 
 Its permissions policy needs exactly four actions:
 
