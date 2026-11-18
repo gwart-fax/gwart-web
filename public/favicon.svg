@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
+  <!-- The printer, on an 8px-grid pixel scale: putty body, dark lower band,
+       a green key and a tongue of paper coming out of the slot. -->
+  <rect width="16" height="16" fill="#E9E3D2" />
+  <rect x="2" y="2" width="12" height="3" fill="#FFFDF6" stroke="#1E1C18" />
+  <rect x="2" y="5" width="12" height="5" fill="#F4EFE1" stroke="#1E1C18" />
+  <rect x="4" y="7" width="5" height="1" fill="#B5AA8A" />
+  <rect x="11" y="7" width="2" height="2" fill="#6CB45C" stroke="#1E1C18" stroke-width="0.5" />
+  <rect x="2" y="10" width="12" height="4" fill="#38352C" stroke="#1E1C18" />
+  <rect x="5" y="11" width="6" height="2" fill="#2C2A25" />
+</svg>

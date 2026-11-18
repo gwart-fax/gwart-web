@@ -1,0 +1,388 @@
+/*
+ * Gwart's look, ported from the app's theme.ts: beige-box retro, drawn as
+ * pixel art. The printer sets the palette - putty plastic, a dark lower band -
+ * and this follows the browser's light or dark setting the same way the app
+ * follows the phone's.
+ *
+ * Token names match theme.ts deliberately. When a colour changes there, it
+ * should change here under the same name rather than being re-derived.
+ */
+
+:root {
+  --bg: #e9e3d2;
+  --panel: #f4efe1;
+  --panel-hi: #fbf8ef;
+  --edge: #1e1c18;
+  --shadow: #1e1c18;
+
+  --ink: #1e1c18;
+  --ink2: #4a463c;
+  --ink3: #5f594a;
+  --rule: #b9b09a;
+
+  --tape: #1e1c18;
+  --tape-text: #ede6d1;
+  --tape-hi: #3a372f;
+
+  --dock: #38352c;
+  --dock-hi: #57523f;
+  --dock-text: #d3cab2;
+  --dock-link: #f4efe1;
+
+  --key: #6cb45c;
+  --key-hi: #aed6a5;
+  --key-lip: #437039;
+  --key-text: #1e1c18;
+
+  --shelf: #b5aa8a;
+  --badge: #d07a3c;
+  --muted: #6f6853;
+  --led-on: #3fbf52;
+
+  /* Silkscreen is drawn on an 8px grid; VT323 runs small for its size. */
+  --font-pixel: 'Silkscreen', 'Courier New', monospace;
+  --font-text: 'VT323', 'Courier New', monospace;
+
+  --side: 22px;
+  --edge-w: 2px;
+  --shadow-size: 3px;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #1c1a16;
+    --panel: #2c2924;
+    --panel-hi: #3a362f;
+    --edge: #0b0a08;
+    --shadow: #0b0a08;
+
+    --ink: #ede6d1;
+    --ink2: #c9c0a8;
+    --ink3: #a9a08a;
+    --rule: #4a463c;
+
+    --tape: #ede6d1;
+    --tape-text: #1c1a16;
+    --tape-hi: #ffffff;
+
+    --dock: #121110;
+    --dock-hi: #2c2924;
+    --dock-text: #a9a08a;
+    --dock-link: #ede6d1;
+
+    --shelf: #5a5546;
+    --muted: #8c846f;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #1c1a16;
+  --panel: #2c2924;
+  --panel-hi: #3a362f;
+  --edge: #0b0a08;
+  --shadow: #0b0a08;
+
+  --ink: #ede6d1;
+  --ink2: #c9c0a8;
+  --ink3: #a9a08a;
+  --rule: #4a463c;
+
+  --tape: #ede6d1;
+  --tape-text: #1c1a16;
+  --tape-hi: #ffffff;
+
+  --dock: #121110;
+  --dock-hi: #2c2924;
+  --dock-text: #a9a08a;
+  --dock-link: #ede6d1;
+
+  --shelf: #5a5546;
+  --muted: #8c846f;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Pixel fonts look wrong smoothed. */
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 20px;
+  line-height: 1.35;
+  /* No horizontal scroll at phone width, whatever the content does. */
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------------- layout */
+
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 var(--side) 0;
+}
+
+.stack > * + * {
+  margin-top: 18px;
+}
+
+/* ----------------------------------------------------------- primitives */
+
+/*
+ * PixelBox: a hard 2px outline, a 1px highlight along the top edge, and a
+ * hard offset shadow instead of a blur. No border radius anywhere - the whole
+ * look depends on corners staying square.
+ */
+.panel {
+  position: relative;
+  background: var(--panel);
+  border: var(--edge-w) solid var(--edge);
+  box-shadow: var(--shadow-size) var(--shadow-size) 0 var(--shadow);
+  padding: 18px;
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--edge-w);
+  background: var(--panel-hi);
+}
+
+/* Label-maker tape, for section headings. */
+.tape {
+  display: inline-block;
+  background: var(--tape);
+  color: var(--tape-text);
+  font-family: var(--font-text);
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 8px 3px;
+  margin: 0;
+  position: relative;
+}
+
+.tape::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--tape-hi);
+  opacity: 0.6;
+}
+
+/* A dashed line of 2px pixels. */
+.rule {
+  height: var(--edge-w);
+  border: 0;
+  margin: 18px 0;
+  background-image: linear-gradient(to right, var(--rule) 0 2px, transparent 2px 6px);
+  background-size: 6px var(--edge-w);
+  background-repeat: repeat-x;
+}
+
+/* ----------------------------------------------------------------- type */
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-pixel);
+  font-weight: 400;
+  margin: 0;
+}
+
+.wordmark {
+  font-family: var(--font-pixel);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: 1px;
+}
+
+.hero {
+  font-size: 32px;
+  line-height: 38px;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.meta {
+  font-size: 18px;
+  color: var(--ink3);
+}
+
+p {
+  margin: 0 0 12px;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+ul {
+  margin: 0 0 12px;
+  padding-left: 22px;
+}
+
+li {
+  margin-bottom: 4px;
+}
+
+/*
+ * VT323 ships no bold, so the browser synthesises one and it comes out blurred
+ * against type this crisp. A 1px hard offset of the glyph itself thickens it
+ * the way a pixel font is meant to be thickened.
+ */
+strong {
+  font-weight: 400;
+  color: var(--ink);
+  text-shadow: 1px 0 0 currentColor;
+}
+
+code {
+  font-family: var(--font-text);
+  font-size: 19px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  padding: 0 4px;
+}
+
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+a:hover,
+a:focus-visible {
+  background: var(--key-hi);
+  color: var(--key-text);
+}
+
+:focus-visible {
+  outline: var(--edge-w) solid var(--badge);
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------- head */
+
+.head {
+  padding: 40px 0 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* The green key, after the one on the printer. Here it is just a lamp. */
+.led {
+  width: 10px;
+  height: 10px;
+  background: var(--led-on);
+  border: var(--edge-w) solid var(--edge);
+  flex: none;
+  align-self: center;
+}
+
+.vents {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+  align-self: center;
+}
+
+.vent {
+  width: 4px;
+  height: 22px;
+  background: var(--shelf);
+}
+
+/* ----------------------------------------------------------- contents */
+
+.contents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.contents a {
+  display: block;
+  background: var(--panel);
+  border: var(--edge-w) solid var(--edge);
+  box-shadow: var(--shadow-size) var(--shadow-size) 0 var(--shadow);
+  padding: 6px 10px;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.contents a:hover,
+.contents a:focus-visible {
+  background: var(--key-hi);
+}
+
+/* Anchored sections should not land under nothing. */
+section[id] {
+  scroll-margin-top: 18px;
+}
+
+/* ----------------------------------------------------------------- dock */
+
+/* The band along the bottom of each screen, after the printer's lower half. */
+.dock {
+  margin-top: 40px;
+  background: var(--dock);
+  border-top: var(--edge-w) solid var(--edge);
+  color: var(--dock-text);
+  padding: 18px var(--side) 24px;
+}
+
+.dock-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.dock a {
+  color: var(--dock-link);
+}
+
+.dock a:hover,
+.dock a:focus-visible {
+  background: var(--dock-hi);
+  color: var(--dock-link);
+}
+
+@media (max-width: 480px) {
+  .wordmark,
+  .hero {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .title {
+    font-size: 20px;
+    line-height: 26px;
+  }
+}
