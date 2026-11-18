@@ -30,6 +30,14 @@ the app follows the phone.
 Nothing has a border radius. The look depends on corners staying square, on hard
 2px outlines, and on offset shadows rather than blurred ones.
 
+## Deploying
+
+S3 + CloudFront + Route 53, fronting `gwartfax.com`. One-time infrastructure
+setup is in [deploy/README.md](deploy/README.md); after that
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) lints, typechecks and
+builds every push, and deploys `main` by itself. Credentials are OIDC, so there
+is no access key in this repository.
+
 ## The privacy text is a copy
 
 The canonical privacy policy lives at `legal/privacy-policy.md` in the main

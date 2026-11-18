@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A newer push should win rather than racing an in-flight deploy to the same
+# bucket. Pull request builds cancel each other; main does not, so a deploy is
+# never killed halfway through an upload.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      # `npm run build` is `tsc -b && vite build`, so this typechecks too.
+      - run: npm run build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+
+    # Scoped to this job alone. A pull request build must not be able to assume
+    # the deploy role, and a fork's PR must never get credentials at all.
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      # OIDC: GitHub mints a short-lived token and AWS trades it for temporary
+      # credentials. No long-lived access key is stored in this repository.
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      # Two passes, because the right cache headers differ and the difference
+      # matters. Vite fingerprints everything under assets/, so those files are
+      # immutable and can be cached for a year. index.html and favicon.svg keep
+      # the same name forever, so caching them is how a deploy goes out and
+      # nobody sees it.
+      #
+      # Assets go up FIRST: the new HTML must never reference a chunk that is
+      # not in the bucket yet.
+      - name: Upload fingerprinted assets
+        run: |
+          aws s3 sync dist/assets/ "s3://${{ vars.AWS_S3_BUCKET }}/assets/" \
+            --delete \
+            --cache-control "public,max-age=31536000,immutable"
+
+      - name: Upload everything else
+        run: |
+          aws s3 sync dist/ "s3://${{ vars.AWS_S3_BUCKET }}/" \
+            --delete \
+            --exclude "assets/*" \
+            --cache-control "public,max-age=0,must-revalidate"
+
+      # One path rather than a list: an invalidation counts as a single path
+      # against the monthly free allowance whether it is `/*` or one file, and
+      # `/*` also clears the `/` entry that DefaultRootObject serves, which
+      # invalidating `/index.html` alone would leave stale.
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.AWS_CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --paths "/*"
