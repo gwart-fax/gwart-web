@@ -23,8 +23,12 @@ export function Home() {
           <a href="/terms">Terms</a> covers what you agree to by using it, and what we do and
           don&rsquo;t promise in return.
         </p>
+        <p>
+          <a href="/support">Support</a> covers the things that go wrong with a printer, and how
+          to reach us.
+        </p>
         <p className="meta">
-          Anything either page doesn&rsquo;t answer, ask: <Mail />.
+          Anything none of them answers, ask: <Mail />.
         </p>
       </section>
     </Layout>

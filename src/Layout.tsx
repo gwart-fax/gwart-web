@@ -39,10 +39,16 @@ export function Section({
 // Pages only. Account deletion is a section of Privacy, reachable from the
 // footer and from /delete, which redirects to its anchor. It was a tab here
 // briefly and a four-chip row reads as a site with more to it than this one has.
+//
+// Support is a page rather than a footer line for the same reason it exists at
+// all: the app links straight to it, and somebody who cannot sign in has to be
+// able to find it without being told where to look. The row still shows three,
+// because the page you are on is filtered out of it.
 const LINKS = [
   { href: '/', label: 'Home' },
   { href: '/privacy', label: 'Privacy' },
   { href: '/terms', label: 'Terms' },
+  { href: '/support', label: 'Support' },
 ];
 
 /**
@@ -107,6 +113,7 @@ export function Layout({ current, children }: { current: string; children: React
           </p>
           <p className="meta" style={{ color: 'inherit' }}>
             <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a> &middot;{' '}
+            <a href="/support">Support</a> &middot;{' '}
             <a href="/privacy#delete">Delete your account</a>
           </p>
         </div>

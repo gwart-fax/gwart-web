@@ -19,6 +19,9 @@ export default defineConfig({
         home: resolve(import.meta.dirname, 'index.html'),
         privacy: resolve(import.meta.dirname, 'privacy/index.html'),
         terms: resolve(import.meta.dirname, 'terms/index.html'),
+        // Linked from inside the app (SUPPORT_URL in gwart-mobile's
+        // src/links.ts), so this URL is one that must not move.
+        support: resolve(import.meta.dirname, 'support/index.html'),
         // Account deletion is a section of Privacy, at #delete, not a page of
         // its own. /delete still works: CloudFront redirects it to the anchor,
         // so there is a short URL to hand out without a second copy of the
