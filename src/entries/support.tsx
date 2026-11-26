@@ -1,0 +1,12 @@
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
+import '../fonts.css';
+import '../index.css';
+import { Support } from '../pages/Support';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <Support />
+  </StrictMode>,
+);
